@@ -1,0 +1,20 @@
+# Parameters needed for trajectory ejecution with Motion Stack
+
+control_plugin_frequency: 30.0 # 20-30 Hz
+
+controlled_robot_IDs: [75] # Realman: 75
+
+default_joint_positions: 
+  leg75_joint1: 0.0
+  leg75_joint2: 0.0
+  leg75_joint3: 0.0
+  leg75_joint4: 0.0
+  leg75_joint5: 0.0
+  leg75_joint6: 0.0
+  leg75_joint7: 0.0
+
+controlled_joints: [
+  "leg75_joint1", "leg75_joint2", "leg75_joint3", "leg75_joint4", "leg75_joint5", "leg75_joint6", "leg75_joint7"
+]
+
+trajectory_file: "trajectory.csv" # Inside /trajectories folder
