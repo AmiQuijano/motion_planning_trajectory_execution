@@ -16,7 +16,7 @@ from ament_index_python.packages import get_package_share_directory
 
 class TrajectoryExecution(Node):
     def __init__(self, trajectory_execution_config=None, trajectory_file=None, csv_delimiter= ' '):
-        super().__init__("trajectory_execution")
+        super().__init__("trajectory_execution_old")
 
         # Get package path
         package_share_path = get_package_share_directory("motion_planning_trajectory_execution")

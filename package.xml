@@ -3,9 +3,14 @@
 <package format="3">
   <name>motion_planning_trajectory_execution</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>The motion_planning_trajectory_execution package</description>
   <maintainer email="ami.quijanoshimizu@gmail.com">ami</maintainer>
   <license>Apache-2.0</license>
+
+  <build_depend>rospack</build_depend>
+   
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>rospack</exec_depend> 
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

@@ -17,4 +17,4 @@ controlled_joints: [
   "leg75_joint1", "leg75_joint2", "leg75_joint3", "leg75_joint4", "leg75_joint5", "leg75_joint6", "leg75_joint7"
 ]
 
-trajectory_file: "trajectory.csv" # Inside /trajectories folder
+trajectory_file: "trajectory_test.csv" # Inside /trajectories folder
