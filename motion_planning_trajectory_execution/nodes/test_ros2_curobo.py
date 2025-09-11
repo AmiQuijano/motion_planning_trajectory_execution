@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Script for testing if cuRobo runs in a ROS2 node
+
 import rclpy
 from rclpy.node import Node
 

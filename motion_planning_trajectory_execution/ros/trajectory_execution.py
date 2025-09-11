@@ -142,6 +142,7 @@ class TrajectoryExecution(Node):
             return
         
         print(self.trajectory[self.current_waypoint])
+        
         # Send waypoint's joint states 
         target_joint_state: Dict[str, float] = {
             joint: value for joint, value in zip(self.LEG_JOINTS, self.trajectory[self.current_waypoint])
