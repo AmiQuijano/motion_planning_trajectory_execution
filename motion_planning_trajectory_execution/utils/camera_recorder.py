@@ -19,7 +19,7 @@ from curobo.types.math import Pose
 import time
 
 
-SAVE_PATH = "camera_recorded_data.pt"  # file to save all frames
+SAVE_PATH = "camera_recorded_data2.pt"  # file to save all frames
 NUM_FRAMES = 10  # how many frames to record
 
 # Consider that 

@@ -15,8 +15,8 @@ from nvblox_torch.datasets.realsense_dataset import RealsenseDataloader
 from curobo.types.math import Pose
 
 
-SAVE_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data.pt")  # file to save all frames
-NUM_FRAMES = 100  # how many frames to record
+SAVE_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data3.pt")  # file to save all frames
+NUM_FRAMES = 300  # how many frames to record
 
 class RealsenseMinimal(Node):
     def __init__(self):
@@ -26,7 +26,7 @@ class RealsenseMinimal(Node):
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
-        self.realsense_data = RealsenseDataloader(clipping_distance_m=0.8)
+        self.realsense_data = RealsenseDataloader(clipping_distance_m=0.5)
 
         # Transform of <a> with respect to <b>
         self.frame_a = "camera_color_optical_frame"
@@ -34,7 +34,7 @@ class RealsenseMinimal(Node):
 
         # Frames 
         self.frames = []        # List of frames data
-        self.save_rate = 10     # Save every n frames
+        self.save_rate = 5     # Save every n frames
         self.frames_saved = 0
 
 
