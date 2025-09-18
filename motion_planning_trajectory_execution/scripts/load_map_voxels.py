@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
         if step_index % 5 == 0.0:
             model.world_model.decay_layer("world")
-            if frame_idx < 100: #len(frames):
+            if frame_idx < 3: #len(frames):
                 current_frame = frames[frame_idx]
 
                 # depth = tensor_args.to_device(current_frame["depth"])
@@ -155,6 +155,9 @@ if __name__ == "__main__":
                     position=tensor_args.to_device(current_frame["position"].cpu().numpy()),
                     quaternion=tensor_args.to_device(current_frame["quaternion"].cpu().numpy()),
                 )
+
+                print("position: ", current_frame["position"].cpu().numpy())
+                print("quaternion: ", current_frame["quaternion"].cpu().numpy())
 
                 data_camera = CameraObservation(
                     depth_image=current_frame["depth"],
@@ -205,7 +208,8 @@ if __name__ == "__main__":
                         pass
 
             else:
-                print("All frames processed")
+                # print("All frames processed")
+                pass
                 
 
     print("finished program")

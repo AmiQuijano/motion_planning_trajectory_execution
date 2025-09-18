@@ -240,19 +240,21 @@ if __name__ == "__main__":
                 # intrinsics = tensor_args.to_device(current_frame["intrinsics"])
                 # position = tensor_args.to_device(current_frame["position"])
                 # quaternion = tensor_args.to_device(current_frame["quaternion"])
+                
+                print("position: ", current_frame["position"].cpu().numpy())
+                print("quaternion: ", current_frame["quaternion"].cpu().numpy())
 
-                pos = current_frame["position"].clone()  # avoid modifying the original tensor
-                pos[0] -= 0.25  # shift by -0.25 along x
-
-                camera_pose = Pose(
-                    position=tensor_args.to_device(pos.cpu().numpy()),
-                    quaternion=tensor_args.to_device(current_frame["quaternion"].cpu().numpy()),
-                )
+                quaternion_corrected = np.array([current_frame["quaternion"][3],current_frame["quaternion"][0], current_frame["quaternion"][1], current_frame["quaternion"][2]])
 
                 # camera_pose = Pose(
                 #     position=tensor_args.to_device(current_frame["position"].cpu().numpy()),
                 #     quaternion=tensor_args.to_device(current_frame["quaternion"].cpu().numpy()),
                 # )
+
+                camera_pose = Pose(
+                    position=tensor_args.to_device(current_frame["position"].cpu().numpy()),
+                    quaternion=tensor_args.to_device(quaternion_corrected),
+                )
 
                 data_camera = CameraObservation(
                     depth_image=current_frame["depth"],
@@ -273,10 +275,12 @@ if __name__ == "__main__":
 
                 world_model.add_camera_frame(data_camera, "world")
                 world_model.process_camera_frames("world", False)
+                # world_model.add_camera_frame(data_camera, "base_link")
+                # world_model.process_camera_frames("base_link", False)
                 torch.cuda.synchronize()
                 world_model.update_blox_hashes()
                 
-                bounding = Cuboid("t", dims=[3.0, 3.0, 3.0], pose=[0, 0, 0, 1, 0, 0, 0])
+                bounding = Cuboid("t", dims=[5.0, 5.0, 5.0], pose=[0, 0, 0, 1, 0, 0, 0])
                 # Bounding box should a cube of at least [length_of_manip + clipping_distance]^3
                 
                 voxels = world_model.get_voxels_in_bounding_box(bounding, voxel_size)

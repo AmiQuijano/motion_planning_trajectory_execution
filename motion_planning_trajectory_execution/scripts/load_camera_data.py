@@ -11,7 +11,7 @@ import cv2
 from curobo.types.math import Pose
 
 
-LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data.pt")
+LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data3.pt")
 
 # Load tensor file
 # torch.serialization.add_safe_globals([Pose])
@@ -23,13 +23,16 @@ print("Available keys:", frames[0].keys())
 for i, frame in enumerate(frames):
     depth = frame["depth"].cpu().numpy()             # [480, 640]
     intrinsics = frame["intrinsics"].cpu().numpy()   # [3, 3]
-    # pose = frame["pose"]
+    position = frame["position"].cpu().numpy() 
+    quaternion = frame["quaternion"].cpu().numpy() 
 
     # Simple depth colormap visualization
     depth_colormap = cv2.applyColorMap(
         cv2.convertScaleAbs(depth, alpha=100), cv2.COLORMAP_VIRIDIS
     )
 
+    print(position)
+    print(quaternion)
     # Display depth
     cv2.imshow("Depth", depth_colormap)
     # print(f"Frame {i}: Intrinsics:\n{intrinsics}\nPose: {pose}")

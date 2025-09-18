@@ -94,10 +94,10 @@ class RealsenseMinimal(Node):
                                          tf.transform.translation.y,
                                          tf.transform.translation.z],
                                         dtype=torch.float32)
-                quaternion = torch.tensor([tf.transform.rotation.x,
+                quaternion = torch.tensor([tf.transform.rotation.w,
+                                           tf.transform.rotation.x,
                                            tf.transform.rotation.y,
-                                           tf.transform.rotation.z,
-                                           tf.transform.rotation.w],
+                                           tf.transform.rotation.z],
                                           dtype=torch.float32)
                 
                 # print(position.dtype)
