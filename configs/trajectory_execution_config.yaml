@@ -13,27 +13,21 @@ controlled_robot_IDs: [75] # Realman: 75
 #   leg75_joint6: 0.0
 #   leg75_joint7: 0.0
 
-defined_joint_position: [
-  -0.1412,
-  -1.3665,
-  0.0,
-  2.0024,
-  0.0,
-  1.5462,
-  0.0
-]
-  # leg75_joint1: -0.1412 #0540013313293
-  # leg75_joint2: -1.3665 #793521881104
-  # leg75_joint3: 0.0
-  # leg75_joint4: 2.0024 #223808288575
-  # leg75_joint5: 0.0
-  # leg75_joint6: 1.5462 #445106506348
-  # leg75_joint7: 0.0
+defined_joint_states:
+  - [0.0, 0.0, -3.1, 0.56, 0.0, 2.23, -3.14159]   # Start position to scan nearby
+  - [0.0, 0.0, 3.1, 0.56, 0.0, 2.23, -3.14159]    # Finish position to scan nearby
+  - [0.0, 0.0, -3.1, 0.0, 0.0, 2.23, -3.14159]    # Start position to scan from afar
+  - [0.0, 0.0, 3.1, 0.0, 0.0, 2.23, -3.14159]     # Finish position to scan from afar
+
+  # - [-0.1412, -1.3665, 0.0, 2.0024, 0.0, 1.5462, 0.0]   # Start position to scan from the bottom
+  # - [-0.1412, -1.3665, 0.0, 2.0024, 0.0, 1.5462, 0.0]   # Finish position to scan from the bottom
+
+n_steps: 650 # number of steps in which a target is reached  
 
 controlled_joints: [
   "leg75_joint1", "leg75_joint2", "leg75_joint3", "leg75_joint4", "leg75_joint5", "leg75_joint6", "leg75_joint7"
 ]
 
-trajectory_file: "trajectory_test.csv" # Inside /trajectories folder
+trajectory_file: trajectory_test.csv #"scanning_traj_1.csv" # Inside /trajectories folder
 
 

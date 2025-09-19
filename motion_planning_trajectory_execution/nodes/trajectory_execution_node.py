@@ -1,5 +1,5 @@
 import rclpy
-from motion_planning_trajectory_execution.ros.trajectory_execution import *
+from motion_planning_trajectory_execution.ros.trajectory_execution_v2 import *
 
 def main():
     rclpy.init()
