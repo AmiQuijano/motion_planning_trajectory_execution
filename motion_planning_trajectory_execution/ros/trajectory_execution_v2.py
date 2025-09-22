@@ -11,15 +11,15 @@ import rclpy
 from rclpy.node import Node
 from rclpy.task import Future
 from typing import List, Callable, Dict
+from ament_index_python.packages import get_package_share_directory
 import motion_stack.ros2.ros2_asyncio.ros2_asyncio as rao
 from motion_stack.ros2.utils.executor import error_catcher
 from motion_stack.api.ros2.joint_api import JointHandler, JointSyncerRos
-from ament_index_python.packages import get_package_share_directory
 from motion_stack.core.utils.joint_state import JState
 
 
 class TrajectoryExecution(Node):
-    def __init__(self, trajectory_execution_config=None, trajectory_file=None, csv_delimiter= ' '):
+    def __init__(self, trajectory_execution_config=None, trajectory_file=None):
         super().__init__("trajectory_execution")
 
         # Get package path
@@ -90,17 +90,15 @@ class TrajectoryExecution(Node):
                 self.done_once = True
                 self.steps = [
                     self.step_wait_joints_ready,        
-                    self.step_zero_position,            
+                    # self.step_zero_position,            
                     lambda: self.step_set_state(self.SET_JOINT_STATES[0]),  
                     # [
                     #   ['step set state', arg1],
                     #   ['step set state steps', arg1, arg2]
                     # ]
-
-                    
                     lambda: self.step_set_state_steps(self.SET_JOINT_STATES[1], self.STEPS),  
-                    self.step_zero_position,   
-                    lambda: self.step_trajectory_execution(self.csv_trajectory, self.csv_waypoints), 
+                    # self.step_zero_position,   
+                    # lambda: self.step_trajectory_execution(self.csv_trajectory, self.csv_waypoints), 
                     lambda: self.step_set_state(self.SET_JOINT_STATES[2]),  
                     lambda: self.step_set_state_steps(self.SET_JOINT_STATES[3], self.STEPS),
                     self.step_finished,              

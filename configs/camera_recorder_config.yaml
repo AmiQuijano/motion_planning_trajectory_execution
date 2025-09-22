@@ -1,0 +1,18 @@
+# 
+
+# Get transforms of frame_a wrt frame_b
+frame_a: "camera_color_optical_frame"
+frame_b: "base_link"
+
+# Save every n frames
+save_rate: 10 
+
+# Maximum number of saved frames
+max_frames: 500
+
+# Name of the .pt file with camera depth, intrinsics and pose data
+save_file: "camera_data_4.pt"
+
+# Maximum depth distance in [m] 
+clipping_distance: 0.5
+

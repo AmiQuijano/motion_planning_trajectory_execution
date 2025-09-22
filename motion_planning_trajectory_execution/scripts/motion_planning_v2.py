@@ -89,8 +89,8 @@ from curobo.util.usd_helper import UsdHelper
 from curobo.util.logger import setup_curobo_logger
 
 
-LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data3.pt")
-# LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_data_4.pt")
+# LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data3.pt")
+LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_data_4.pt")
 
 # Load tensor file
 frames = torch.load(LOAD_PATH, weights_only=False)
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     my_world = World(stage_units_in_meters=1.0)
     stage = my_world.stage
-    my_world.scene.add_default_ground_plane()
+    my_world.scene.add_default_ground_plane(z_position=-1.0)
 
     xform = stage.DefinePrim("/World", "Xform")
     stage.SetDefaultPrim(xform)
@@ -139,6 +139,8 @@ if __name__ == "__main__":
                     "pose": [0, 0, 0, 1, 0, 0, 0],
                     "integrator_type": "tsdf",
                     "voxel_size": 0.02,
+                    # "min_bound": [-5.0, -5.0, -1.0],
+                    # "max_bound": [5.0, 5.0, 5.0]
                 }
             }
         }
@@ -151,14 +153,14 @@ if __name__ == "__main__":
     j_names = robot_cfg["kinematics"]["cspace"]["joint_names"]
     default_config = robot_cfg["kinematics"]["cspace"]["retract_config"]
 
-    robot, _ = add_robot_to_scene(robot_cfg, my_world) #, position=np.array([0.25, 0, 0]))
+    robot, _ = add_robot_to_scene(robot_cfg, my_world) #, position=np.array([0, 0, 0.5]))
 
     articulation_controller = robot.get_articulation_controller()
-    world_cfg_table = WorldConfig.from_dict(
-        load_yaml(join_path(get_world_configs_path(), "collision_table.yml"))
-    )
-    world_cfg_table.cuboid[0].pose[2] -= 0.04
-    world_cfg.add_obstacle(world_cfg_table.cuboid[0])
+    # world_cfg_table = WorldConfig.from_dict(
+    #     load_yaml(join_path(get_world_configs_path(), "collision_table.yml"))
+    # )
+    # world_cfg_table.cuboid[0].pose[2] -= 0.04
+    # world_cfg.add_obstacle(world_cfg_table.cuboid[0])
     
     motion_gen_config = MotionGenConfig.load_from_robot_config(
         robot_cfg,
@@ -210,7 +212,7 @@ if __name__ == "__main__":
     mapping_done = False
 
     if not args.use_debug_draw:
-        voxel_viewer = VoxelManager(10000, size=render_voxel_size)
+        voxel_viewer = VoxelManager(5000, size=render_voxel_size)
 
     while simulation_app.is_running():
         my_world.step(render=True)
@@ -236,7 +238,7 @@ if __name__ == "__main__":
             )
 
         if step_index % 5 == 0.0 and mapping_done == False:
-            world_model.decay_layer("world")
+            # world_model.decay_layer("world")
             if frame_idx < len(frames):
                 current_frame = frames[frame_idx]
 
@@ -245,24 +247,33 @@ if __name__ == "__main__":
                 # position = tensor_args.to_device(current_frame["position"])
                 # quaternion = tensor_args.to_device(current_frame["quaternion"])
                 
-                print("position: ", current_frame["position"].cpu().numpy())
-                print("quaternion: ", current_frame["quaternion"].cpu().numpy())
+                print("position: ", current_frame["position_tensor"].cpu().numpy())
+                print("quaternion: ", current_frame["quaternion_tensor"].cpu().numpy())
 
-                quaternion_corrected = np.array([current_frame["quaternion"][3],current_frame["quaternion"][0], current_frame["quaternion"][1], current_frame["quaternion"][2]])
+                # quaternion_corrected = np.array([current_frame["quaternion"][3],current_frame["quaternion"][0], current_frame["quaternion"][1], current_frame["quaternion"][2]])
+
+                # new_position = current_frame["position_tensor"].cpu().numpy()
+                # new_position[2] += 0.5
+
+                camera_pose = Pose(
+                    position=tensor_args.to_device(current_frame["position_tensor"].cpu().numpy()),
+                    quaternion=tensor_args.to_device(current_frame["quaternion_tensor"].cpu().numpy()),
+                )
+
+                # camera_pose = Pose(
+                #     position=tensor_args.to_device(new_position),
+                #     quaternion=tensor_args.to_device(current_frame["quaternion_tensor"].cpu().numpy()),
+                # )
 
                 # camera_pose = Pose(
                 #     position=tensor_args.to_device(current_frame["position"].cpu().numpy()),
-                #     quaternion=tensor_args.to_device(current_frame["quaternion"].cpu().numpy()),
+                #     quaternion=tensor_args.to_device(quaternion_corrected),
                 # )
 
-                camera_pose = Pose(
-                    position=tensor_args.to_device(current_frame["position"].cpu().numpy()),
-                    quaternion=tensor_args.to_device(quaternion_corrected),
-                )
-
                 data_camera = CameraObservation(
-                    depth_image=current_frame["depth"],
-                    intrinsics=current_frame["intrinsics"],
+                    rgb_image=current_frame["rgba_tensor"],
+                    depth_image=current_frame["depth_tensor"],
+                    intrinsics=current_frame["intrinsics_tensor"],
                     pose=camera_pose
                 )
                 # data_camera = CameraObservation(
@@ -291,10 +302,20 @@ if __name__ == "__main__":
                 if voxels.shape[0] > 0:
                     # print("IM INSIDEEEEEEEEE")
                     # print(f"[DEBUG] Total voxels in world model: {voxels.shape[0]}")
-                    voxels = voxels[voxels[:, 2] > voxel_size]
+                    # voxels = voxels[voxels[:, 2] > voxel_size]
+                    voxels = voxels[voxels[:, 2] > -0.5]
+                    # voxels = voxels[voxels[:, 2] > -0.1]
                     voxels = voxels[voxels[:, 0] > 0.0]
+                    # voxels = voxels[voxels[:, 0] > 0.03 | voxels[:, 0] < -0.03]
+                    # voxels = voxels[(voxels[:, 0] > 0.03) | (voxels[:, 0] < -0.03)]
+                    # voxels = voxels[voxels[:, 1] > 0.03 | voxels[:, 1] < -0.03]
+                    # voxels = voxels[(voxels[:, 1] > 0.03) | (voxels[:, 1] < -0.03)]
+
+                    # voxels = voxels[voxels[:, 0] > 0.0]
+                    # voxel_viewer.update_voxels(voxels[:, :3].cpu().numpy())
                     # Count after filtering
                     # print(f"[DEBUG] Voxels after filtering: {voxels.shape[0]}")
+                    # voxels = voxels
 
                     if args.use_debug_draw:
                     #     draw_points(voxels)
@@ -315,29 +336,29 @@ if __name__ == "__main__":
                 mapping_done = True
                 
                 # Save map as .nvblox
-                world_model.save_layer("world", "nvblox_map_test.nvblx")
+                # world_model.save_layer("world", "nvblox_map_test.nvblx")
                 
-                # Save map as mesh
-                mesh = world_model.get_mesh_from_blox_layer("world", mode="nvblox")
-                print("Num vertices:", len(mesh.vertices))
-                print("Num faces:", len(mesh.faces))
-                print("Has colors:", mesh.vertex_colors is not None and len(mesh.vertex_colors) > 0)
+                # # Save map as mesh
+                # mesh = world_model.get_mesh_from_blox_layer("world", mode="nvblox")
+                # print("Num vertices:", len(mesh.vertices))
+                # print("Num faces:", len(mesh.faces))
+                # print("Has colors:", mesh.vertex_colors is not None and len(mesh.vertex_colors) > 0)
 
-                # Convert to numpy
-                vertices = np.array(mesh.vertices, dtype=np.float32)
-                faces = np.array(mesh.faces, dtype=np.int32)
+                # # Convert to numpy
+                # vertices = np.array(mesh.vertices, dtype=np.float32)
+                # faces = np.array(mesh.faces, dtype=np.int32)
 
-                # If colors exist, convert too
-                colors = None
-                if hasattr(mesh, "vertex_colors") and mesh.vertex_colors is not None:
-                    colors = np.array(mesh.vertex_colors, dtype=np.uint8)
+                # # If colors exist, convert too
+                # colors = None
+                # if hasattr(mesh, "vertex_colors") and mesh.vertex_colors is not None:
+                #     colors = np.array(mesh.vertex_colors, dtype=np.uint8)
 
-                # Build trimesh object
-                trimesh_mesh = trimesh.Trimesh(vertices=vertices, faces=faces, vertex_colors=colors)
+                # # Build trimesh object
+                # trimesh_mesh = trimesh.Trimesh(vertices=vertices, faces=faces, vertex_colors=colors)
 
-                # Export
-                trimesh_mesh.export("mesh_map_test.obj")
-                print(f"✅ Mesh saved")
+                # # Export
+                # trimesh_mesh.export("mesh_map_test2.obj")
+                # print(f"✅ Mesh saved")
 
 
                 # Mapper.save_map()

@@ -8,23 +8,24 @@ import torch
 import os
 import cv2
 
-from curobo.types.math import Pose
+# from curobo.types.math import Pose
 
 
-LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_recorded_data3.pt")
+LOAD_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "camera_data", "camera_data_4.pt")
 
 # Load tensor file
 # torch.serialization.add_safe_globals([Pose])
-frames = torch.load(LOAD_PATH, weights_only=True)
+frames = torch.load(LOAD_PATH, weights_only=False)
 print(f"Loaded {len(frames)} frames")
 print("Available keys:", frames[0].keys())
 
 # Inspect all frames with OpenCV
 for i, frame in enumerate(frames):
-    depth = frame["depth"].cpu().numpy()             # [480, 640]
-    intrinsics = frame["intrinsics"].cpu().numpy()   # [3, 3]
-    position = frame["position"].cpu().numpy() 
-    quaternion = frame["quaternion"].cpu().numpy() 
+    depth = frame["depth_tensor"].cpu().numpy()             # [480, 640]
+    rgb = frame["rgb_np"]
+    intrinsics = frame["intrinsics_tensor"].cpu().numpy()   # [3, 3]
+    position = frame["position_tensor"].cpu().numpy() 
+    quaternion = frame["quaternion_tensor"].cpu().numpy() 
 
     # Simple depth colormap visualization
     depth_colormap = cv2.applyColorMap(
@@ -35,6 +36,7 @@ for i, frame in enumerate(frames):
     print(quaternion)
     # Display depth
     cv2.imshow("Depth", depth_colormap)
+    cv2.imshow("RGB", rgb)
     # print(f"Frame {i}: Intrinsics:\n{intrinsics}\nPose: {pose}")
 
     key = cv2.waitKey(100)  # 100 ms per frame

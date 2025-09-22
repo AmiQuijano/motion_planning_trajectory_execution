@@ -15,6 +15,7 @@ setup(
         # Include all files that may be used in scripts through get_package_share_directory
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py', recursive=True)),
         (os.path.join('share', package_name, 'configs'), glob('configs/*', recursive=True)),
+        (os.path.join('share', package_name, 'camera_data'), glob('camera_data/*', recursive=True)),
         (os.path.join('share', package_name, 'trajectories'), glob('trajectories/*', recursive=True)),
     ],
     install_requires=['setuptools'],
@@ -30,7 +31,7 @@ setup(
             f'test_ros2_curobo = {package_name}.nodes.test_ros2_curobo:main', 
             f'nvblox_mapper = {package_name}.nodes.nvblox_mapper:main', 
             f'camera_recorder = {package_name}.nodes.camera_recorder:main', 
-            f'test_camera_node = {package_name}.nodes.test_camera_node:main', 
+            f'test_camera_node = {package_name}.utils.test_camera_node:main', 
         ],
     },
 )

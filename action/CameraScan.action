@@ -1,0 +1,11 @@
+# Goal
+string save_path
+int32 num_frames
+int32 save_rate
+---
+# Result
+bool success
+string save_path
+---
+# Feedback
+float32 progress  # optional, 0.0 - 1.0
