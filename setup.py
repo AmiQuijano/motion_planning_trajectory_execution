@@ -4,6 +4,15 @@ from setuptools import find_packages, setup
 
 package_name = 'motion_planning_trajectory_execution'
 
+robot_description_files = []
+
+for root, _, files in os.walk('robot_description'):
+    file_list = [os.path.join(root, f) for f in files if os.path.isfile(os.path.join(root, f))]
+    if file_list:
+        # preserve relative path
+        install_dir = os.path.join('share', package_name, root)
+        robot_description_files.append((install_dir, file_list))
+
 setup(
     name=package_name,
     version='0.0.0',
@@ -17,7 +26,12 @@ setup(
         (os.path.join('share', package_name, 'configs'), glob('configs/*', recursive=True)),
         (os.path.join('share', package_name, 'camera_data'), glob('camera_data/*', recursive=True)),
         (os.path.join('share', package_name, 'trajectories'), glob('trajectories/*', recursive=True)),
-    ],
+        # (os.path.join('share', package_name, 'robot_description'), glob('robot_description/**/*', recursive=True)),
+        # (
+        #     os.path.join('share', package_name, 'robot_description'),
+        #     [f for f in glob('robot_description/**/*', recursive=True) if os.path.isfile(f)]
+        # ),
+    ] + robot_description_files,
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Ami Quijano Shimizu',

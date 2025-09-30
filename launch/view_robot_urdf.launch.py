@@ -4,9 +4,12 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
-    pkg_name = 'tesseract_moonshot'
-    urdf_file = 'rm75_6f_realsense.urdf' #'rm75_6f.urdf' # 'hero_arm_v2.urdf'
-    urdf_path = os.path.join(get_package_share_directory(pkg_name), 'urdf', urdf_file)
+    pkg_name = 'motion_planning_trajectory_execution'
+    urdf_file = "hero_v2_alone.urdf" #'rm75_6f_realsense.urdf' #'rm75_6f.urdf' # 'hero_arm_v2.urdf'
+    # urdf_path = os.path.join(get_package_share_directory(pkg_name), 'robot_description', 'hero_v3_3links', 'urdf', urdf_file)
+    # urdf_path = os.path.join(get_package_share_directory(pkg_name), 'robot_description', urdf_file)
+    urdf_path = "/home/ami/ros2_ws/src/motion_planning_trajectory_execution/robot_description/hero_v3/urdf/hero_7dof_v3_SW.urdf"
+    # urdf_path = "/home/ami/ros2_ws/src/motion_planning_trajectory_execution/robot_description/hero_v2_alone.urdf"
 
     # Read the URDF content
     with open(urdf_path, 'r') as inf:

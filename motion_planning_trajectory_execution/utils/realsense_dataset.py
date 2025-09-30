@@ -14,13 +14,16 @@ import numpy as np
 import pyrealsense2 as rs
 
 
-def setup_realsense(clipping_distance_m):
+def setup_realsense(clipping_distance_m, serial_number=None):
     # Create a pipeline
     pipeline = rs.pipeline()
 
     # Create a config and configure the pipeline to stream
     #  different resolutions of color and depth streams
     config = rs.config()
+
+    if serial_number is not None:
+        config.enable_device(serial_number)
 
     # Get device product line for setting a supporting resolution
     pipeline_wrapper = rs.pipeline_wrapper(pipeline)
@@ -149,10 +152,10 @@ import torch
 
 
 class RealsenseDataloader:
-    def __init__(self, max_steps=1e6, clipping_distance_m=2.5):
+    def __init__(self, max_steps=1e6, clipping_distance_m=2.5, serial_number=None):
         self.max_steps = int(max_steps)
         self.step = 0
-        self.realsense = setup_realsense(clipping_distance_m)
+        self.realsense = setup_realsense(clipping_distance_m, serial_number)
 
     def __len__(self):
         return self.max_steps

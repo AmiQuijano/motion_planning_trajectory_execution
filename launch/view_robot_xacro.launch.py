@@ -22,10 +22,11 @@ def to_urdf(xacro_path, parameters=None):
     return urdf_path
 
 def generate_launch_description():
-    # xacro_path = os.path.join(get_package_share_directory('realsense2_description'), 'urdf', 'test_d435i_camera.urdf.xacro')
+    xacro_path = os.path.join(get_package_share_directory('realsense2_description'), 'urdf', 'test_d435i_camera.urdf.xacro')
     # xacro_path = os.path.join(get_package_share_directory('tesseract_moonshot'), 'urdf', 'rm75_6f_realsense.xacro')
     # xacro_path = os.path.join(get_package_share_directory('tesseract_moonshot'), 'urdf', 'hero_arm_v2.xacro')
-    xacro_path = os.path.join(get_package_share_directory('realman_interface'), 'urdf', 'realman_75.xacro')
+    # xacro_path = os.path.join(get_package_share_directory('realman_interface'), 'urdf', 'realman_75.xacro')
+    # xacro_path = os.path.join(get_package_share_directory('realsense2_description'), 'urdf', 'test_d455_camera.urdf.xacro')
 
     urdf = to_urdf(xacro_path)
 

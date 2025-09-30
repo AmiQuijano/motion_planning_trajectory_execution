@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+  name="hero_7dof_v3_rs">
+  <link
+    name="base_link">
+  </link>
+  <link
+    name="gripper1_base">
+    <inertial>
+      <origin
+        xyz="0.024401 -0.00013313 0.02768"
+        rpy="0 0 0" />
+      <mass
+        value="0.47007" />
+      <inertia
+        ixx="0.0015043"
+        ixy="-4.8635E-06"
+        ixz="-1.2525E-06"
+        iyy="0.00030301"
+        iyz="5.0374E-08"
+        izz="0.001673" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper1_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper1_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper1_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.06"
+      rpy="3.1416 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="gripper1_base" />
+  </joint>
+  <link
+    name="gripper1_jaw_left">
+    <inertial>
+      <origin
+        xyz="-0.029142 0.030693 -0.020218"
+        rpy="0 0 0" />
+      <mass
+        value="0.092629" />
+      <inertia
+        ixx="0.00015307"
+        ixy="9.6925E-06"
+        ixz="1.8582E-05"
+        iyy="0.00017907"
+        iyz="2.9003E-06"
+        izz="0.00010824" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper1_jaw_left.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper1_jaw_left.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper1_jaw_left_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.035 0.059351 0.05"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="gripper1_base" />
+    <child
+      link="gripper1_jaw_left" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.017"
+      upper="0.05"
+      effort="100"
+      velocity="2" />
+  </joint>
+  <link
+    name="gripper1_jaw_right">
+    <inertial>
+      <origin
+        xyz="0.028999 -0.031083 -0.020174"
+        rpy="0 0 0" />
+      <mass
+        value="0.090419" />
+      <inertia
+        ixx="0.00015295"
+        ixy="9.6925E-06"
+        ixz="-1.8582E-05"
+        iyy="0.0001789"
+        iyz="-2.9075E-06"
+        izz="0.00010816" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper1_jaw_right.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper1_jaw_right.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper1_jaw_right_joint"
+    type="prismatic">
+    <origin
+      xyz="0.035 -0.05935 0.05"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="gripper1_base" />
+    <child
+      link="gripper1_jaw_right" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.017"
+      upper="0.05"
+      effort="100"
+      velocity="2" />
+    <mimic
+    joint="gripper1_jaw_left_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="link1">
+    <inertial>
+      <origin
+        xyz="-0.00022818 0.022648 0.049053"
+        rpy="0 0 0" />
+      <mass
+        value="0.25969" />
+      <inertia
+        ixx="0.0003936"
+        ixy="8.7511E-07"
+        ixz="2.8973E-06"
+        iyy="0.00045213"
+        iyz="-8.9157E-05"
+        izz="0.00046666" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 1.0 1.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="continuous">
+    <origin
+      xyz="0 0 0"
+      rpy="3.1416 0 0" />
+    <parent
+      link="gripper1_base" />
+    <child
+      link="link1" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link2">
+    <inertial>
+      <origin
+        xyz="0.022648 0.00022817 0.049553"
+        rpy="0 0 0" />
+      <mass
+        value="0.2597" />
+      <inertia
+        ixx="0.00045213"
+        ixy="-8.7507E-07"
+        ixz="-8.9157E-05"
+        iyy="0.0003936"
+        iyz="-2.8973E-06"
+        izz="0.00046666" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 1.0 1.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="continuous">
+    <origin
+      xyz="0 0.0665 0.0635"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="link1" />
+    <child
+      link="link2" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link3">
+    <inertial>
+      <origin
+        xyz="-0.20485 8.5969E-08 0.04975"
+        rpy="0 0 0" />
+      <mass
+        value="0.60091" />
+      <inertia
+        ixx="0.00096591"
+        ixy="-2.4474E-07"
+        ixz="1.8671E-06"
+        iyy="0.014537"
+        iyz="-1.4285E-09"
+        izz="0.015255" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 1.0 1.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint3"
+    type="continuous">
+    <origin
+      xyz="0.067 0 0.064"
+      rpy="0 1.5708 0" />
+    <parent
+      link="link2" />
+    <child
+      link="link3" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link4">
+    <inertial>
+      <origin
+        xyz="-0.18726 9.7269E-07 0.055027"
+        rpy="0 0 0" />
+      <mass
+        value="0.66431" />
+      <inertia
+        ixx="0.0010713"
+        ixy="-3.5896E-07"
+        ixz="-5.5071E-06"
+        iyy="0.016379"
+        iyz="7.0959E-09"
+        izz="0.01708" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 1.0 1.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint4"
+    type="continuous">
+    <origin
+      xyz="-0.41 0 0"
+      rpy="-3.1416 0 1.5708" />
+    <parent
+      link="link3" />
+    <child
+      link="link4" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link5">
+    <inertial>
+      <origin
+        xyz="-0.00022817 -0.014447 0.044352"
+        rpy="0 0 0" />
+      <mass
+        value="0.2597" />
+      <inertia
+        ixx="0.0003936"
+        ixy="2.8973E-06"
+        ixz="-8.7505E-07"
+        iyy="0.00046666"
+        iyz="8.9157E-05"
+        izz="0.00045213" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 1.0 1.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint5"
+    type="continuous">
+    <origin
+      xyz="-0.41 0 0.003"
+      rpy="-3.1416 0 1.5708" />
+    <parent
+      link="link4" />
+    <child
+      link="link5" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link6">
+    <inertial>
+      <origin
+        xyz="0.00022818 0.014447 0.044352"
+        rpy="0 0 0" />
+      <mass
+        value="0.25969" />
+      <inertia
+        ixx="0.0003936"
+        ixy="2.8974E-06"
+        ixz="8.751E-07"
+        iyy="0.00046666"
+        iyz="-8.9157E-05"
+        izz="0.00045213" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1.0 1.0 1.0 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint6"
+    type="continuous">
+    <origin
+      xyz="0 -0.064 0.067"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="link5" />
+    <child
+      link="link6" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link7">
+  </link>
+  <joint
+    name="joint7"
+    type="continuous">
+    <origin
+      xyz="0 0.064 0.067"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="link6" />
+    <child
+      link="link7" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="gripper2_base">
+    <inertial>
+      <origin
+        xyz="-0.024401 -0.00013323 -0.02768"
+        rpy="0 0 0" />
+      <mass
+        value="0.47006" />
+      <inertia
+        ixx="0.0015043"
+        ixy="4.8635E-06"
+        ixz="-1.2524E-06"
+        iyy="0.00030301"
+        iyz="-5.01E-08"
+        izz="0.001673" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper2_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper2_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper2_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="3.1416 0 0" />
+    <parent
+      link="link7" />
+    <child
+      link="gripper2_base" />
+  </joint>
+  <link
+    name="gripper2_jaw_left">
+    <inertial>
+      <origin
+        xyz="-0.029142 0.030693 -0.020218"
+        rpy="0 0 0" />
+      <mass
+        value="0.092629" />
+      <inertia
+        ixx="0.00015307"
+        ixy="9.6925E-06"
+        ixz="1.8582E-05"
+        iyy="0.00017907"
+        iyz="2.9003E-06"
+        izz="0.00010824" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper2_jaw_left.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper2_jaw_left.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper2_jaw_left_joint"
+    type="prismatic">
+    <origin
+      xyz="0.035 0.061 -0.05"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="gripper2_base" />
+    <child
+      link="gripper2_jaw_left" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.017"
+      upper="0.05"
+      effort="100"
+      velocity="2" />
+  </joint>
+  <link
+    name="gripper2_jaw_right">
+    <inertial>
+      <origin
+        xyz="-0.028999 0.031083 -0.020174"
+        rpy="0 0 0" />
+      <mass
+        value="0.090419" />
+      <inertia
+        ixx="0.00015295"
+        ixy="9.6925E-06"
+        ixz="1.8582E-05"
+        iyy="0.0001789"
+        iyz="2.9075E-06"
+        izz="0.00010816" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper2_jaw_right.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.5 0.5 0.5 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://motion_planning_trajectory_execution/robot_description/hero_v3/meshes/gripper2_jaw_right.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper2_jaw_right_joint"
+    type="prismatic">
+    <origin
+      xyz="-0.035 -0.061 -0.05"
+      rpy="-1.5708 0 -3.1416" />
+    <parent
+      link="gripper2_base" />
+    <child
+      link="gripper2_jaw_right" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.017"
+      upper="0.05"
+      effort="100"
+      velocity="2" />
+    <mimic
+    joint="gripper2_jaw_left_joint"
+      multiplier="1"
+      offset="0" />
+  </joint>
+
+  <!-- REALSENSE ON GRIPPER 1 -->
+  <link
+    name="camera1_bottom_screw_frame">
+  </link>
+  <joint
+    name="camera1_joint"
+    type="fixed">
+    <origin
+      xyz="0.069 0 0.024705"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="gripper1_base" />
+    <child
+      link="camera1_bottom_screw_frame" />
+  </joint>
+  <link name="camera1_link"/>
+  <joint name="camera1_link_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.011150000000000002 0.0475 0.0145"/>
+    <parent link="camera1_bottom_screw_frame"/>
+    <child link="camera1_link"/>
+  </joint>
+  <!-- camera1 depth joints and links -->
+  <link name="camera1_depth_frame"/>
+  <joint name="camera1_depth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera1_link"/>
+    <child link="camera1_depth_frame"/>
+  </joint>
+  <link name="camera1_depth_optical_frame"/>
+  <joint name="camera1_depth_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera1_depth_frame"/>
+    <child link="camera1_depth_optical_frame"/>
+  </joint>
+  <!-- camera1 left IR joints and links -->
+  <link name="camera1_infra1_frame"/>
+  <joint name="camera1_infra1_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.0 0"/>
+    <parent link="camera1_link"/>
+    <child link="camera1_infra1_frame"/>
+  </joint>
+  <link name="camera1_infra1_optical_frame"/>
+  <joint name="camera1_infra1_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera1_infra1_frame"/>
+    <child link="camera1_infra1_optical_frame"/>
+  </joint>
+  <!-- camera1 right IR joints and links -->
+  <link name="camera1_infra2_frame"/>
+  <joint name="camera1_infra2_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.095 0"/>
+    <parent link="camera1_link"/>
+    <child link="camera1_infra2_frame"/>
+  </joint>
+  <link name="camera1_infra2_optical_frame"/>
+  <joint name="camera1_infra2_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera1_infra2_frame"/>
+    <child link="camera1_infra2_optical_frame"/>
+  </joint>
+  <!-- camera1 color joints and links -->
+  <link name="camera1_color_frame"/>
+  <joint name="camera1_color_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.059 0"/>
+    <parent link="camera1_link"/>
+    <child link="camera1_color_frame"/>
+  </joint>
+  <link name="camera1_color_optical_frame"/>
+  <joint name="camera1_color_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera1_color_frame"/>
+    <child link="camera1_color_optical_frame"/>
+  </joint>
+  <link name="camera1_accel_frame"/>
+  <link name="camera1_accel_optical_frame"/>
+  <link name="camera1_gyro_frame"/>
+  <link name="camera1_gyro_optical_frame"/>
+  <link name="camera1_imu_optical_frame"/>
+  <joint name="camera1_accel_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.01602 -0.03022 0.0074"/>
+    <parent link="camera1_link"/>
+    <child link="camera1_accel_frame"/>
+  </joint>
+  <joint name="camera1_accel_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera1_accel_frame"/>
+    <child link="camera1_accel_optical_frame"/>
+  </joint>
+  <joint name="camera1_gyro_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.01602 -0.03022 0.0074"/>
+    <parent link="camera1_link"/>
+    <child link="camera1_gyro_frame"/>
+  </joint>
+  <joint name="camera1_gyro_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera1_gyro_frame"/>
+    <child link="camera1_gyro_optical_frame"/>
+  </joint>
+  <joint name="camera1_imu_optical_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera1_gyro_optical_frame"/>
+    <child link="camera1_imu_optical_frame"/>
+  </joint>
+
+  <!-- REALSENSE ON GRIPPER 2 -->
+   <link
+    name="camera2_bottom_screw_frame">
+  </link>
+  <joint
+    name="camera2_joint"
+    type="fixed">
+    <origin
+      xyz="-0.069 0 -0.024705"
+      rpy="-1.5708 0 1.5708" />
+    <parent
+      link="gripper2_base" />
+    <child
+      link="camera2_bottom_screw_frame" />
+  </joint>
+  <link name="camera2_link"/>
+  <joint name="camera2_link_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.011150000000000002 0.0475 0.0145"/>
+    <parent link="camera2_bottom_screw_frame"/>
+    <child link="camera2_link"/>
+  </joint>
+  <!-- camera2 depth joints and links -->
+  <link name="camera2_depth_frame"/>
+  <joint name="camera2_depth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera2_link"/>
+    <child link="camera2_depth_frame"/>
+  </joint>
+  <link name="camera2_depth_optical_frame"/>
+  <joint name="camera2_depth_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera2_depth_frame"/>
+    <child link="camera2_depth_optical_frame"/>
+  </joint>
+  <!-- camera2 left IR joints and links -->
+  <link name="camera2_infra1_frame"/>
+  <joint name="camera2_infra1_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0.0 0"/>
+    <parent link="camera2_link"/>
+    <child link="camera2_infra1_frame"/>
+  </joint>
+  <link name="camera2_infra1_optical_frame"/>
+  <joint name="camera2_infra1_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera2_infra1_frame"/>
+    <child link="camera2_infra1_optical_frame"/>
+  </joint>
+  <!-- camera2 right IR joints and links -->
+  <link name="camera2_infra2_frame"/>
+  <joint name="camera2_infra2_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.095 0"/>
+    <parent link="camera2_link"/>
+    <child link="camera2_infra2_frame"/>
+  </joint>
+  <link name="camera2_infra2_optical_frame"/>
+  <joint name="camera2_infra2_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera2_infra2_frame"/>
+    <child link="camera2_infra2_optical_frame"/>
+  </joint>
+  <!-- camera2 color joints and links -->
+  <link name="camera2_color_frame"/>
+  <joint name="camera2_color_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 -0.059 0"/>
+    <parent link="camera2_link"/>
+    <child link="camera2_color_frame"/>
+  </joint>
+  <link name="camera2_color_optical_frame"/>
+  <joint name="camera2_color_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera2_color_frame"/>
+    <child link="camera2_color_optical_frame"/>
+  </joint>
+  <link name="camera2_accel_frame"/>
+  <link name="camera2_accel_optical_frame"/>
+  <link name="camera2_gyro_frame"/>
+  <link name="camera2_gyro_optical_frame"/>
+  <link name="camera2_imu_optical_frame"/>
+  <joint name="camera2_accel_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.01602 -0.03022 0.0074"/>
+    <parent link="camera2_link"/>
+    <child link="camera2_accel_frame"/>
+  </joint>
+  <joint name="camera2_accel_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera2_accel_frame"/>
+    <child link="camera2_accel_optical_frame"/>
+  </joint>
+  <joint name="camera2_gyro_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.01602 -0.03022 0.0074"/>
+    <parent link="camera2_link"/>
+    <child link="camera2_gyro_frame"/>
+  </joint>
+  <joint name="camera2_gyro_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" xyz="0 0 0"/>
+    <parent link="camera2_gyro_frame"/>
+    <child link="camera2_gyro_optical_frame"/>
+  </joint>
+  <joint name="camera2_imu_optical_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="camera2_gyro_optical_frame"/>
+    <child link="camera2_imu_optical_frame"/>
+  </joint>
+
+</robot>

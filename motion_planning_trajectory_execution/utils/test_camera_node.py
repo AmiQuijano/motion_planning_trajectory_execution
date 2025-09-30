@@ -49,7 +49,7 @@ class CameraRecorder(Node):
         file_name = self.camera_recorder_cfg["save_file"]
 
         # Start Realsense
-        self.realsense_data = RealsenseDataloader(clipping_distance_m=clipping_distance)
+        self.realsense_data = RealsenseDataloader(clipping_distance_m=clipping_distance, serial_number="233522074308")
 
         # TF listener
         self.tf_buffer = Buffer()
